@@ -5,8 +5,10 @@ FROM python:3.12-slim AS builder
 WORKDIR /build
 ENV PIP_NO_CACHE_DIR=1 PIP_DISABLE_PIP_VERSION_CHECK=1
 COPY requirements.txt .
-RUN python -m venv /opt/venv \
-    && /opt/venv/bin/pip install -r requirements.txt
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends --only-upgrade zlib1g \
+    && rm -rf /var/lib/apt/lists/*
 
 # ---- Stage 2: финальный минимальный образ ----
 FROM python:3.12-slim AS runtime
