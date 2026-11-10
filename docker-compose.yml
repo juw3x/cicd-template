@@ -1,0 +1,6 @@
+services:
+  app:
+    build: .
+    image: cicd-template-app:local
+    ports:
+      - "8000:8000"
